@@ -17,10 +17,15 @@ For example, the command below must "work":
 psss-benchmark needle.txt haystack.txt
 ```
 
-## Workflow
+## Runner API
 
-There is a generic Nextflow script, defined in `workflow.nf` that can run these
-Docker images.
+A runner is just something that knows how to run a benchmark container
+(described above) with appropriate input and collect the output. Our initial
+runner will be implemented as a Nextflow workflow, but there is no reason that
+there couldn't be others. For very simple cases, even a shell script would
+suffice.
+
+The default runner, a Nextflow script, is defined in `workflow.nf`.
 
 ## Example
 
@@ -41,4 +46,5 @@ nextflow run -params-file params.yaml -profile docker workflow.nf
   * Decide on data formats for the inputs
   * Handle data references (like s3 URIs) cleanly
   * Make Mock Search output the right format
+  * Add container images for a couple tools
 
