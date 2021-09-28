@@ -14,7 +14,7 @@ search for, and a collection of sequences to search.
 For example, the command below must "work":
 
 ```
-psss-benchmark needle.fa haystack.fa
+psss-benchmark needle.txt haystack.txt
 ```
 
 ## Workflow
