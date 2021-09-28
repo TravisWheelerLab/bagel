@@ -2,11 +2,13 @@
 
 from sys import argv
 
-with open(argv[1], 'r') as needle_file:
-    needle = needle_file.read().strip()
+# Usage: ./tool.py <haystack> <needle>
 
-with open(argv[2], 'r') as haystack_file:
+with open(argv[1], 'r') as haystack_file:
     haystack = haystack_file.read().strip()
+
+with open(argv[2], 'r') as needle_file:
+    needle = needle_file.read().strip()
 
 last_index = 0
 while True:

@@ -7,5 +7,6 @@ RUN apt-get update && \
         python3 && \
     rm -rf /var/lib/apt/lists/*
 
-COPY tool.py /bin/psss-benchmark
+COPY tool.py /bin/
+COPY wrapper.sh /bin/psss-benchmark
 
