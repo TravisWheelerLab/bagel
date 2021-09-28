@@ -30,6 +30,12 @@ a basic example.
 There is also trivial sample data (compatible with the mock tool) in the `data/`
 directory.
 
+You can run the Mock Search example using Docker like this:
+
+```
+nextflow run -params-file params.yaml -profile docker workflow.nf
+```
+
 ## TODO
 
   * Decide on data formats for the inputs
