@@ -1,9 +1,7 @@
 #!/usr/bin/env nextflow
 
 needle = Channel.value( params.needle )
-
-// This would normally be a queue channel
-haystack = Channel.value( params.haystack )
+haystack = Channel.fromPath( params.haystack )
 
 process run_tool {
     input:

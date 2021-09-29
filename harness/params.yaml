@@ -1,5 +1,2 @@
-needle: ${projectDir}/data/needle.txt
-
-# Note that this would normally include many files, splitting the search space
-# up for parallelization.
-haystack: ${projectDir}/data/haystack.txt
+needle: ${projectDir}/data/needles.fa
+haystack: ${projectDir}/data/haystack-*.fa
