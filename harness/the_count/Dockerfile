@@ -1,3 +1,3 @@
-FROM tcolligan4/thecount
+FROM traviswheelerlab/the_count
 
 COPY wrapper.sh /bin/psss-benchmark
