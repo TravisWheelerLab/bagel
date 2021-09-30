@@ -5,6 +5,6 @@ RUN apt-get update && \
         python3 && \
     rm -rf /var/lib/apt/lists/*
 
-COPY tool.py /bin/
-COPY wrapper.sh /bin/psss-benchmark
-
+COPY prepare_data.py /bin/prepare_data
+COPY run_tool.sh /bin/run_tool
+COPY tool.py /bin/tool.py

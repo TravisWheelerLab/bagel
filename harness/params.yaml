@@ -1,2 +1,3 @@
-needle: ${projectDir}/data/needles.fa
-haystack: ${projectDir}/data/haystack-*.fa
+dna_file: ${projectDir}/data/dna_msas.sto
+protein_file: ${projectDir}/data/protein_msas.sto
+target_file: ${projectDir}/data/target.fa

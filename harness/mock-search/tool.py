@@ -2,7 +2,7 @@
 
 from sys import argv
 
-# Usage: ./tool.py <haystacks> <needles>
+# Usage: ./tool.py <targets> <queries>
 
 def load(file):
     pairs = []
@@ -37,5 +37,11 @@ if __name__ == '__main__':
     for (nn, ns) in needles:
         for (hn, hs) in haystacks:
             for index in find(hs, ns):
-                print(f'{nn}\t{hn}\t{index}\t{len(ns)}')
+                e_value = 1.0
+                score = 2.0
+                start = index
+                stop = index + len(ns) - 1
+                target = hn
+                query = nn
+                print(f'{e_value}\t{score}\t{start}\t{stop}\t{target}\t{query}')
 
