@@ -6,7 +6,7 @@ PROFILE="${1:-docker}"
 WORKDIR="${2:-work}"
 QUEUE="${3:-nextflow-queue}"
 CONTAINER="${4:-traviswheelerlab/psss-harness}"
-DATASET="${5:-$PWD/fixtures}"
+DATASET="${5:-$PWD/fixtures/transmark}"
 
 nextflow \
     -C transmark-nextflow.config \

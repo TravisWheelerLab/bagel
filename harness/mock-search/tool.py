@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 from sys import argv
-from subprocess import run
 
 
 # Usage: ./tool.py <targets> <queries>
@@ -9,34 +8,44 @@ from subprocess import run
 
 def load(file):
     pairs = []
-    while True:
-        try:
-            name = next(file).strip()[1:]
-            seq = next(file).strip()
-            pairs.append((name, seq))
-        except StopIteration:
-            break
+
+    name = ''
+    seq = ''
+
+    for line in file:
+        line = line.strip()
+
+        if line == '':
+            continue
+
+        if line[0] == '>':
+            if name:
+                pairs.append((name, seq))
+            name = line[1:]
+            seq = ''
+        else:
+            seq += line
+        
+    if seq:
+        pairs.append((name, seq))
+
     return pairs
 
 
 def find(haystack, needle):
-    last_index = 0
-    while True:
-        try:
-            last_index = haystack.index(needle, last_index + 1)
-            yield last_index
-        except ValueError:
-            break
+    size = 5
+    for index in range(len(haystack) - size):
+        if needle[0:size] == haystack[index:index + size]:
+            yield index
 
 
 if __name__ == '__main__':
-
-    with open('query.fa', 'r') as needle_file:
-        needles = load(needle_file)
-
-    with open('shared.fa', 'r') as haystack_file:
+    with open(argv[1], 'r') as haystack_file:
         haystacks = load(haystack_file)
 
+    with open(argv[2], 'r') as needle_file:
+        needles = load(needle_file)
+    
     for (nn, ns) in needles:
         for (hn, hs) in haystacks:
             for index in find(hs, ns):

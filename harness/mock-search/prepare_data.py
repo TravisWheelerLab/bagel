@@ -13,25 +13,29 @@ mkdir('spread')
 # Convert each MSA to a single FASTA file
 # that will be run as a single job.
 with open(DNA_PATH, 'r') as dna_file:
-    pairs = []
+    pairs = {}
     for index, line in enumerate(dna_file):
         line = line.strip()
         if line.startswith('#') or len(line) == 0:
             continue
         if line == '//':
             with open('query.fa', 'w') as spread_file:
-                for name, seq in pairs:
+                for name, seq in pairs.items():
                     spread_file.write(f'>{name}\n')
-                    spread_file.write(f'{seq}')
+                    spread_file.write(f'{seq}\n')
             run(['tar', 'czf', f'spread/{index}.tar.gz', 'query.fa'])
             run(['rm', f'query.fa'])
             pairs.clear()
         else:
-            pairs.append(line.split())
+            (name, seq) = line.split()
+            if name in pairs:
+                pairs[name] += seq
+            else:
+                pairs[name] = seq
 
 # We don't need to manipulate the target
 # input data so just bundle it up.
-# TODO: Make this less stupid
+# TODO: Make this less ridiculous...
 # The problem is that TARGET_PATH is actually
 # a symlink, so we need the actual file in the
 # tarball, not the symlink. In real life, this
