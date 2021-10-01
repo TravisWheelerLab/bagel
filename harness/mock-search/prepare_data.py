@@ -14,7 +14,7 @@ mkdir('spread')
 # that will be run as a single job.
 with open(DNA_PATH, 'r') as dna_file:
     pairs = []
-    for index, line in enumerate(dna_file.readlines()):
+    for index, line in enumerate(dna_file):
         line = line.strip()
         if line.startswith('#') or len(line) == 0:
             continue
