@@ -2,6 +2,8 @@
 
 set -e
 
+# TODO: write usage instructions
+
 PROFILE="${1:-docker}"
 WORKDIR="${2:-work}"
 QUEUE="${3:-nextflow-queue}"
