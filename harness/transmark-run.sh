@@ -4,7 +4,7 @@ set -e
 
 # TODO: write usage instructions
 
-PROFILE="${1:-docker}"
+PROFILE="${1:-gscc}"
 WORKDIR="${2:-work}"
 QUEUE="${3:-nextflow-queue}"
 CONTAINER="${4:-traviswheelerlab/psss-harness}"
