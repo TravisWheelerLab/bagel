@@ -31,13 +31,10 @@ def find(haystack, needle):
 
 if __name__ == '__main__':
 
-    run(['tar', 'xf', argv[1]])
-    run(['tar', 'xf', argv[2]])
-
     with open('query.fa', 'r') as needle_file:
         needles = load(needle_file)
 
-    with open('targets.fa', 'r') as haystack_file:
+    with open('shared.fa', 'r') as haystack_file:
         haystacks = load(haystack_file)
 
     for (nn, ns) in needles:
