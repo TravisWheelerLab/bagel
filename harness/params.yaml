@@ -1,3 +1,0 @@
-dna_file: ${projectDir}/fixtures/dna_msas.sto
-protein_file: ${projectDir}/fixtures/protein_msas.sto
-target_file: ${projectDir}/fixtures/target.fa
