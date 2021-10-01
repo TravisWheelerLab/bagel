@@ -1,8 +1,18 @@
 DATASETS = ['CAMI_low']
 
+def checkpoint_output_decompress_source_genomes(wildcards):
+    # checkpoint_output encodes the output dir from the checkpoint rule.
+    checkpoint_output = checkpoints.decompress_source_genomes.get(**wildcards).output[0]    
+    file_names = expand("outputs/eggnog_source_genomes/{source_genome}.emapper.annotations",
+                        source_genome = glob_wildcards(os.path.join(checkpoint_output, "{source_genome}")).source_genome)
+    file_names.remove("outputs/eggnog_source_genomes/.snakemake_timestamp.emapper.annotations")
+    #file_names = file_name[:-1]
+    return file_names
+
 rule all:
     input:
-        expand("outputs/megahit/{dataset}.contigs.fa", dataset = DATASETS)
+        #expand("outputs/bowtie2/{dataset}_unmapped.fa", dataset = DATASETS),
+        checkpoint_output_decompress_source_genomes
 
 #############################################################
 ## Obtaining data
@@ -63,7 +73,7 @@ rule assemble:
     benchmark: "benchmarks/megahit_{dataset}.txt"
     conda: "envs/megahit.yml"
     shell:'''
-    megahit -1 {input.r1} -2 {input.r2} -o {params.outdir} --out-prefix {wildcards.dataset}
+    megahit -1 {input.r1} -2 {input.r2} -o {params.outdir} --out-prefix {wildcards.dataset} --min-contig-len 500
     mv {params.outdir}/{wildcards.dataset}.contigs.fa {output}
     '''
 
@@ -106,14 +116,14 @@ rule identify_unmapped_reads:
     output: "outputs/bowtie2/{dataset}_unmapped.sam"
     resources: mem_mb = 8000
     benchmark: "benchmarks/samtools_f4_{dataset}.txt"
-    conda: 'bowtie2.yml'
+    conda: 'envs/bowtie2.yml'
     shell:'''
     samtools view -f 4 {input} > {output}
     '''
 
 rule convert_unmapped_reads_to_fastq:
-    input: "outputs/map_nbhd_reads/{sample}_unmapped.sam"
-    output: "outputs/map_nbhd_reads/{sample}_unmapped.fa"
+    input: "outputs/bowtie2/{dataset}_unmapped.sam"
+    output: "outputs/bowtie2/{dataset}_unmapped.fa"
     resources: mem_mb = 8000
     benchmark: "benchmarks/samtools_fasta_{dataset}.txt"
     conda: 'envs/bowtie2.yml'
@@ -128,14 +138,62 @@ rule convert_unmapped_reads_to_fastq:
 
 checkpoint decompress_source_genomes:
     input: "inputs/CAMI_low/source_genomes_low.tar.gz"
-    output: directory("outputs/CAMI_low/source_genomes/")
+    output: directory("inputs/CAMI_low/source_genomes")
     shell:'''
     tar xvf {input} -C inputs/CAMI_low
+    # these next two lines are probably not the best idea, but the fai can be regenerated easily
+    # while its not clear that the circular_one_repeats were used to build the reads.
+    # I think if I don't move them out of this directory, I won't be able to properly solve for
+    # the root source genome names for downstream rules. It's annoying that the source fasta
+    # files shipped with two file endings, *fasta and *fna. 
+    rm {output}/*fai
+    mv {output}/circular_one_repeat inputs/CAMI_low
     '''
 
+rule prokka_source_genomes:
+    input: "inputs/CAMI_low/source_genomes/{source_genome}"
+    output: 
+        "outputs/prokka_source_genomes/{source_genome}.faa",
+        "outputs/prokka_source_genomes/{source_genome}.gff",
+        "outputs/prokka_source_genomes/{source_genome}.fna",
+    resources: mem_mb = 8000
+    benchmark: "benchmarks/prokka_{source_genome}.txt"
+    conda: 'envs/prokka.yml'
+    params: 
+        outdir = 'outputs/prokka_source_genomes/',
+        lt = lambda wildcards: wildcards.source_genome.split(".")[0]
+    threads: 1
+    shell:'''
+    prokka {input} --outdir {params.outdir} --prefix {wildcards.source_genome} \
+        --force --locustag {params.lt} --cpus {threads} \
+        --compliant --centre X
+    '''
 
+rule download_eggnog_db:
+    output: "inputs/eggnog_db/eggnog.db"
+    threads: 1   
+    resources: mem_mb = 1000
+    conda: "envs/eggnog.yml"
+    shell:'''
+    download_eggnog_data.py -H -d 2 -y --data_dir inputs/eggnog_db
+    '''
 
-
-
-
-
+rule eggnog_annotate_source_genomes:
+    input: 
+        faa = "outputs/prokka_source_genomes/{source_genome}.faa",
+        db = 'inputs/eggnog_db/eggnog.db'
+    output: "outputs/eggnog_source_genomes/{source_genome}.emapper.annotations"
+    conda: 'envs/eggnog.yml'
+    resources:
+        mem_mb = 32000
+    threads: 8
+    params: 
+        outdir = "outputs/eggnog_source_genomes/",
+        dbdir = "inputs/eggnog_db"
+    shell:'''
+    emapper.py --cpu {threads} -i {input.faa} --output {wildcards.source_genome} \
+       --output_dir {params.outdir} -m hmmer -d none --tax_scope auto \
+       --go_evidence non-electronic --target_orthologs all --seed_ortholog_evalue 0.001 \
+       --seed_ortholog_score 60 --override --temp_dir tmp/ \
+       -d 2 --data_dir {params.dbdir}
+    '''
