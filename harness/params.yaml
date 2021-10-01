@@ -1,3 +1,0 @@
-dna_file: ${projectDir}/fixtures/transmark/queries_dna.sto
-protein_file: ${projectDir}/fixtures/transmark/queries_protein.sto
-target_file: ${projectDir}/fixtures/transmark/targets.fa
