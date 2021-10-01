@@ -8,4 +8,4 @@ SPREAD_PATH="$2"
 tar xf "$SHARED_PATH"
 tar xf "$SPREAD_PATH"
 
-tool.py target.fa query.fa
+tool.py targets.fa query.fa

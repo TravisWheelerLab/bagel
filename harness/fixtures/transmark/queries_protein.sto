@@ -1,0 +1,22 @@
+# STOCKHOLM 1.0
+#=GF ID Cytochrome_CBB3
+#=GF AC PF13442.1
+#=GF DE Cytochrome C oxidase, cbb3-type, subunit III 
+#=GF AU Coggill P
+#=GF GA 27.0 22.0
+#=GF NC 26.9 21.9
+#=GF TC 27.0 22.0
+
+#=GS B7HL34_BACC7/178-249 AC B7HL34.1
+#=GS Q63DK8_BACCZ/178-249 AC Q63DK8.1
+#=GS C2UBM2_BACCE/178-249 AC C2UBM2.1
+#=GS C2PTR4_BACCE/178-249 AC C2PTR4.1
+#=GS B7JH09_BACC0/178-249 AC B7JH09.1
+
+B7HL34_BACC7/178-249 DKN-DDGYKLM-Q-K---NTCL-T-CH-GDN--LQGG------AA-----A------------PALQ-------NL---TLK--------P-------------EEIAK-------IAK--E-G-------K-----G-----S---MP----KGV----F---K-GTDEELKKLSEFV
+Q63DK8_BACCZ/178-249 DKN-DDGYKLM-Q-K---NTCL-T-CH-GDN--LQGG------AA-----A------------PALQ-------NL---TLK--------P-------------EEIAK-------IAK--E-G-------K-----G-----S---MP----KGV----F---K-GTDEELKKLSEFV
+C2UBM2_BACCE/178-249 DKN-DDGYKLM-Q-K---NTCL-T-CH-GDN--LQGG------AA-----A------------PALQ-------NL---TLK--------P-------------EEIAK-------IAK--E-G-------K-----G-----S---MP----KGV----F---K-GTDEELKKLSEFV
+C2PTR4_BACCE/178-249 DKN-DDGYKLM-Q-K---NTCL-T-CH-GDN--LQGG------AA-----A------------PALQ-------NL---TLK--------P-------------EEIAK-------IAK--D-G-------K-----G-----S---MP----KGV----F---K-GTDEELKKLSEFV
+B7JH09_BACC0/178-249 DKN-DDGYKLM-Q-K---NTCL-T-CH-GDN--LQGG------AA-----A------------PALQ-------NL---TLK--------P-------------EEIAK-------IAK--D-G-------K-----G-----A---MP----KGI----F---K-GTDEELKKLSEFI
+#=GC SS_cons         HHH.HHHHHHH.H.H....HTH.H.HH.TCC..GTTT.....GGG.....SS..........S--TT.......CC..HHHH........HHHH.......H-HHHHHHH....HHHHC..C.T.......TC..GGG.....T...B-....GGT.T..-...T.S-HHHHHHHHHHH
+//
