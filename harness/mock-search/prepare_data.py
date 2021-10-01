@@ -16,7 +16,7 @@ with open(DNA_PATH, 'r') as dna_file:
     pairs = []
     for index, line in enumerate(dna_file):
         line = line.strip()
-        if line.startswith('#'):
+        if line.startswith('#') or len(line) == 0:
             continue
         if line == '//':
             with open('query.fa', 'w') as spread_file:

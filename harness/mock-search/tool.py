@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 from sys import argv
+from subprocess import run
+
 
 # Usage: ./tool.py <targets> <queries>
+
 
 def load(file):
     pairs = []
@@ -26,14 +29,14 @@ def find(haystack, needle):
             break
 
 
-with open(argv[1], 'r') as haystack_file:
-    haystacks = load(haystack_file)
-
-with open(argv[2], 'r') as needle_file:
-    needles = load(needle_file)
-
-
 if __name__ == '__main__':
+
+    with open('query.fa', 'r') as needle_file:
+        needles = load(needle_file)
+
+    with open('shared.fa', 'r') as haystack_file:
+        haystacks = load(haystack_file)
+
     for (nn, ns) in needles:
         for (hn, hs) in haystacks:
             for index in find(hs, ns):
@@ -44,4 +47,3 @@ if __name__ == '__main__':
                 target = hn
                 query = nn
                 print(f'{e_value}\t{score}\t{start}\t{stop}\t{target}\t{query}')
-
