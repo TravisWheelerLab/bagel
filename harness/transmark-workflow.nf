@@ -1,8 +1,8 @@
 #!/usr/bin/env nextflow
 
-dna_file = Channel.value( params.dna_file )
-protein_file = Channel.value( params.protein_file )
-target_file = Channel.value( params.target_file )
+dna_file = Channel.fromPath( params.dna_file )
+protein_file = Channel.fromPath( params.protein_file )
+target_file = Channel.fromPath( params.target_file )
 
 process prepare_data {
     input:

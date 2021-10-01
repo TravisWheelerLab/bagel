@@ -14,10 +14,11 @@ mkdir('spread')
 # that will be run as a single job.
 with open(DNA_PATH, 'r') as dna_file:
     pairs = []
-    for index, line in enumerate(dna_file):
+    for index, line in enumerate(dna_file.readlines()):
         line = line.strip()
-        if line.startswith('#'):
+        if line.startswith('#') or len(line) == 0:
             continue
+        pairs.append([line[0], line[1]])
         if line == '//':
             with open('query.fa', 'w') as spread_file:
                 for name, seq in pairs:
