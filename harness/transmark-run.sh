@@ -7,7 +7,7 @@ set -e
 PROFILE="${1:-gscc}"
 WORKDIR="${2:-work}"
 QUEUE="${3:-nextflow-queue}"
-CONTAINER="${4:-traviswheelerlab/psss-harness}"
+CONTAINER="${4:-traviswheelerlab/psss-harness:latest}"
 DATASET="${5:-$PWD/fixtures/transmark}"
 
 nextflow \
