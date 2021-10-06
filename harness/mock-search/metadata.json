@@ -1,0 +1,6 @@
+{
+    "name": "mock-search",
+    "version": "1.0.0",
+    "benchmarks": ["transmark"],
+    "image": "traviswheelerlab/bagel-mock-search:1.0.0"
+}
