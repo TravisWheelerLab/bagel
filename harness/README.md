@@ -152,6 +152,21 @@ TODO: Flesh this out in a big way...
 }
 ```
 
+## Development
+
+The runner is implemented as a Python project. We use Pipenv to manage
+dependencies. To install dependencies in a new virtual environment, run `pipenv
+sync --dev`. If you change the dependencies in `Pipfile`, run
+`./tool/update-deps.sh` to update the necessary lock files. Other common tasks
+are described below:
+
+  * Check types: `./tool/check-types.sh`
+  * Format code: `./tool/run-format.sh`
+  * Run linter: `./tool/check-lints.sh`
+  * Run tests: `./tool/check-tests.sh`
+
+Please run the scripts above before submitting a pull request.
+
 ## TODO
 
   * Handle data references (like s3 URIs) cleanly
