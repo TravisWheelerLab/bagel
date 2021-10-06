@@ -1,9 +1,18 @@
 # Benchmark Harness
 
+This document provides an introduction to the benchmark harness produced during the PSSS codeathon. The harness is intended to consist of a 'runner' script that manages the task of running one or more competitor tools against underlying benchmark data and accumulates results in a post-processing analysis stage. This runner utilizes Nextflow to optionally manage fan-out of computation to available cluster/cloud resources, though alternative workflow systems may be enabled in the future. 
+
+The current form of the harness is a pilot project completed during (and shortly after) the PSSS codeathon; future effort will lead to improved functionality, generalization, and documentation. For now, interested readers may be aided by this [architecture document](harness_architecture_draft.pdf).  As the project is in active development, current documentation of specific usage and API are fairly light. If you're thinking of using this framework and the existing documentation isn't sufficient for your needs, file a github issue to get further guidance. 
+
+
+
 A person wishing to benchmark a particular search tool creates a Docker image
 that encapsulates the tool itself and abides by a particular "API". The
 container is then run and provided with data in a generic input format. It
 provides its results in a generic output format which are then collected.
+
+
+
 
 ## Container API
 
