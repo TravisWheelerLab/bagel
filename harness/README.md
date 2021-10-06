@@ -131,23 +131,51 @@ An example metadata file might look like this:
     "name": "mock-search",
     "version": "1.0.0",
     "benchmarks": ["transmark"],
-    "image": "traviswheelerlab/bagel-mock-search:1.0.0"
+    "image": "traviswheelerlab/bagel-mock-search:1.0.0",
+    "results": {
+      "matches": "matches.tsv"
+    }
 }
+}
+
 ```
 
 ## Adding a Benchmark
 
 TODO: Flesh this out in a big way...
 
+### Benchmark Family Metadata File
+
+A benchmark family defines common inputs that benchmarks in the family provide,
+and common outputs that compatible tools must provide.
+
+```json
+{
+  "name": "transmark",
+  "version": "1.0.0",
+  "benchmark_data": [
+    "queries_dna",
+    "queries_protein",
+    "targets"
+  ],
+  "tool_results": [
+    "matches"
+  ]
+}
+```
+
+### Benchmark Metadata File
+
 ```json
 {
   "family": "transmark",
   "name": "60% ID",
   "version": "1.0.0",
-  "files": {
-    "queries_dna.sto": "https://osf.io/...",
-    "queries_protein.sto": "https://osf.io/...",
-    "targets.fa": "https://osf.io/..."
+  "image": "traviswheelerlab/bagel-transmark:1.0.0",
+  "data": {
+    "queries_dna": "https://osf.io/...",
+    "queries_protein": "https://osf.io/...",
+    "targets": "https://osf.io/..."
   }
 }
 ```
