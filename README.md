@@ -192,6 +192,7 @@ are described below:
   * Format code: `./tool/run-format.sh`
   * Run linter: `./tool/check-lints.sh`
   * Run tests: `./tool/check-tests.sh`
+  * Update documentation: `./tool/update-docs.sh`
 
 Please run the scripts above before submitting a pull request.
 
