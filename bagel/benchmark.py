@@ -1,4 +1,3 @@
-from json.decoder import JSONDecodeError
 from typing import IO, Dict, List, NamedTuple, TextIO, Union
 
 
@@ -10,17 +9,20 @@ class Benchmark(NamedTuple):
     family: str
     name: str
     version: str
-    files: Dict[str, str]
+    image: str
+    data: Dict[str, str]
 
     def __str__(self) -> str:
         return f"{self.name}\t{self.family}\t{self.version}"
 
 
-def load_benchmark(file: TextIO) -> Benchmark:
+def load_benchmark(file: IO) -> Benchmark:
     """
     Load a benchmark metadata object from its JSON file. Raises a ``ValueError``
     if the object is malformed in any way. Use ``validate_benchmark`` to get
     more information about an error.
+
+    TODO Adjust file paths to be relative to the metadata file location
     """
     import json
 
@@ -38,6 +40,7 @@ def validate_benchmark(data: Union[IO, Dict]) -> List[str]:
     they are of the correct types.
     """
     import json
+    from json.decoder import JSONDecodeError
 
     if isinstance(data, dict):
         bmark = data
@@ -54,7 +57,8 @@ def validate_benchmark(data: Union[IO, Dict]) -> List[str]:
         ("family", str),
         ("name", str),
         ("version", str),
-        ("files", dict),
+        ("image", str),
+        ("data", dict),
     ]
 
     msgs = []

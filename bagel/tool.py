@@ -1,4 +1,4 @@
-from typing import Iterable, List, NamedTuple, TextIO
+from typing import IO, Dict, Iterable, List, NamedTuple, TextIO, Union
 
 
 class Tool(NamedTuple):
@@ -11,9 +11,9 @@ class Tool(NamedTuple):
         return f"{self.name}\t{self.version}\t{', '.join(self.benchmarks)}"
 
 
-def load_tool(file: TextIO) -> Tool:
+def load_tool(file: IO) -> Tool:
     pass
 
 
-def validate_tool(file: TextIO) -> List[str]:
+def validate_tool(file: Union[IO, Dict]) -> List[str]:
     pass

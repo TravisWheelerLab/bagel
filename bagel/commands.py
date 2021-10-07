@@ -1,6 +1,9 @@
-from typing import Any, Dict, Iterable, Optional
+from typing import Iterable
 
+from .aws import AWSBatchConfig
+from .benchmark import Benchmark
 from .benchmarks import BENCHMARKS
+from .tool import Tool
 from .tools import TOOLS
 
 
@@ -14,28 +17,32 @@ def benchmarks_list() -> None:
         print(bmark)
 
 
-def run_aws(
-    benchmark: str,
-    cli_path: str,
-    container: str,
-    params: Dict[str, Any],
-    queue: str,
-    region: str,
-    tools: Iterable[str],
-    debug: bool = False,
+def benchmarks_validate(benchmark: Benchmark) -> None:
+    pass
+
+
+def run_aws_batch(
+    aws: AWSBatchConfig,
+    benchmark: Benchmark,
+    tools: Iterable[Tool],
+    debug: bool,
 ) -> None:
     pass
 
 
-def run_docker() -> None:
+def run_docker(
+    benchmark: Benchmark,
+    tools: Iterable[Tool],
+    debug: bool,
+) -> None:
     pass
 
 
-def tools_add() -> None:
-    pass
-
-
-def tools_list(benchmark: Optional[str]) -> None:
+def tools_list() -> None:
     print("NAME\tVERSION\tBENCHMARKS")
     for tool in TOOLS:
         print(tool)
+
+
+def tools_validate(tool: Tool) -> None:
+    pass
