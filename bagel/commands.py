@@ -1,14 +1,12 @@
 from typing import Iterable
 
 from .aws import AWSBatchConfig
-from .benchmark import Benchmark
+from .benchmark import Benchmark, validate_benchmark
 from .benchmarks import BENCHMARKS
-from .tool import Tool
+from .errors import FAIL_CODE
+from .logger import get_logger
+from .tool import Tool, validate_tool
 from .tools import TOOLS
-
-
-def benchmarks_add() -> None:
-    pass
 
 
 def benchmarks_list() -> None:
@@ -17,8 +15,16 @@ def benchmarks_list() -> None:
         print(bmark)
 
 
-def benchmarks_validate(benchmark: Benchmark) -> None:
-    pass
+def benchmarks_validate(bmark_path: str) -> int:
+    with open(bmark_path, "r") as bmark_file:
+        errors = validate_benchmark(bmark_file)
+
+    if errors:
+        for error in errors:
+            get_logger().error(error)
+            return FAIL_CODE
+
+    return 0
 
 
 def run_aws_batch(
@@ -26,7 +32,7 @@ def run_aws_batch(
     benchmark: Benchmark,
     tools: Iterable[Tool],
     debug: bool,
-) -> None:
+) -> int:
     pass
 
 
@@ -34,7 +40,7 @@ def run_docker(
     benchmark: Benchmark,
     tools: Iterable[Tool],
     debug: bool,
-) -> None:
+) -> int:
     pass
 
 
@@ -44,5 +50,13 @@ def tools_list() -> None:
         print(tool)
 
 
-def tools_validate(tool: Tool) -> None:
-    pass
+def tools_validate(tool_path: str) -> int:
+    with open(tool_path, "r") as tool_file:
+        errors = validate_tool(tool_file)
+
+    if errors:
+        for error in errors:
+            get_logger().error(error)
+        return FAIL_CODE
+
+    return 0

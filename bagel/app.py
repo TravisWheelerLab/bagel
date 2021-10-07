@@ -1,13 +1,17 @@
 from argparse import Namespace
 
 from .aws import AWSBatchConfig
-from .benchmark import load_benchmark, validate_benchmark
-from .commands import benchmarks_list, run_aws_batch, run_docker, tools_list
+from .benchmark import load_benchmark
+from .commands import (
+    benchmarks_list,
+    benchmarks_validate,
+    run_aws_batch,
+    run_docker,
+    tools_list,
+    tools_validate,
+)
 from .logger import configure_logger, get_logger
-from .tool import load_tool, validate_tool
-
-
-FAIL_CODE = 10
+from .tool import load_tool
 
 
 class AppError(Exception):
@@ -41,14 +45,14 @@ def run_app(ns: Namespace) -> int:
                 ns.region,
             )
 
-            run_aws_batch(
+            return run_aws_batch(
                 aws=config,
                 benchmark=benchmark,
                 tools=tools,
                 debug=ns.debug,
             )
         if ns.environment == "docker":
-            run_docker(
+            return run_docker(
                 benchmark=benchmark,
                 tools=tools,
                 debug=ns.debug,
@@ -61,13 +65,7 @@ def run_app(ns: Namespace) -> int:
             if ns.list:
                 get_logger().warn("Ignoring --validate because --list was passed")
             else:
-                with open(ns.validate, "r") as benchmark_file:
-                    errors = validate_benchmark(benchmark_file)
-
-                if errors:
-                    for error in errors:
-                        get_logger().error(error)
-                        return FAIL_CODE
+                return benchmarks_validate(ns.validate)
 
     if ns.command == "tools":
         if ns.list:
@@ -76,12 +74,6 @@ def run_app(ns: Namespace) -> int:
             if ns.list:
                 get_logger().warn("Ignoring --validate because --list was passed")
             else:
-                with open(ns.validate, "r") as tool_file:
-                    errors = validate_tool(tool_file)
-
-                if errors:
-                    for error in errors:
-                        get_logger().error(error)
-                        return FAIL_CODE
+                return tools_validate(ns.validate)
 
     return 0
