@@ -8,9 +8,26 @@ from .logger import get_logger
 from .tool import Tool
 
 
+class Unsupported(Exception):
+    """
+    An exception that indicates a method has been intentionally omitted from a
+    ``Backend`` implementation.
+    """
+
+    pass
+
+
 class Backend(ABC):
+    """
+    A backend translates the benchmark and tool metadata into actual
+    computational processes. Each method instructs the backend to run jobs in a
+    different environment. Implementations do not need to support all methods.
+    Unimplemented methods should raise ``Unsupported``.
+    """
+
     @abstractmethod
     def run_aws(
+        self,
         aws: AWSBatchConfig,
         benchmark: Benchmark,
         tools: Iterable[Tool],
@@ -19,6 +36,7 @@ class Backend(ABC):
 
     @abstractmethod
     def run_docker(
+        self,
         benchmark: Benchmark,
         tools: Iterable[Tool],
     ) -> None:
@@ -26,7 +44,12 @@ class Backend(ABC):
 
 
 class NextflowBackend(Backend):
+    """
+    A backend that uses the Nextflow workflow management system.
+    """
+
     def run_aws(
+        self,
         aws: AWSBatchConfig,
         benchmark: Benchmark,
         tools: Iterable[Tool],
@@ -47,7 +70,7 @@ class NextflowBackend(Backend):
                 "-process.queue",
                 aws.queue,
                 "-process.container",
-                tool.container,
+                tool.image,
                 "-aws.region",
                 aws.region,
                 "-aws.batch.cliPath",
@@ -78,6 +101,7 @@ class NextflowBackend(Backend):
             logger.debug("runner stderr:\n%s", proc.stderr)
 
     def run_docker(
+        self,
         benchmark: Benchmark,
         tools: Iterable[Tool],
     ) -> None:

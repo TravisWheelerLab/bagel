@@ -29,3 +29,5 @@ def fetch_file(
         logger = get_logger()
         logger.debug(f"downloading {url} failed with code {err.errno}")
         return None
+
+    return dest_path
