@@ -6,9 +6,13 @@
 Welcome to BAGEL's documentation!
 =================================
 
+.. If you create a new page, add its name to the list below!
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+   modules
 
 
 
