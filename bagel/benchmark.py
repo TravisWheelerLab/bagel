@@ -73,7 +73,7 @@ def validate_benchmark(data: Union[IO, Dict]) -> List[str]:
     if msgs:
         return msgs
 
-    for key, value in bmark["files"].items():
+    for key, value in bmark["data"].items():
         if not isinstance(key, str):
             msgs.append(f"incorrect files key type ({type(key)}): {key}")
         if not isinstance(value, str):
