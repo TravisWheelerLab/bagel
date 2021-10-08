@@ -8,21 +8,12 @@ from .logger import get_logger
 from .tool import Tool
 
 
-class Unsupported(Exception):
-    """
-    An exception that indicates a method has been intentionally omitted from a
-    ``Backend`` implementation.
-    """
-
-    pass
-
-
 class Backend(ABC):
     """
     A backend translates the benchmark and tool metadata into actual
     computational processes. Each method instructs the backend to run jobs in a
     different environment. Implementations do not need to support all methods.
-    Unimplemented methods should raise ``Unsupported``.
+    Unimplemented methods should raise ``UnsupportedEnvironment``.
 
     TODO Add support for Azure Batch
     TODO Add support of AWS Lambda
