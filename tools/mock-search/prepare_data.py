@@ -3,6 +3,7 @@
 from sys import argv
 from os import mkdir
 from subprocess import run
+from typing import Dict
 
 DNA_PATH=argv[1]
 PROTEIN_PATH=argv[2]
@@ -13,7 +14,7 @@ mkdir('spread')
 # Convert each MSA to a single FASTA file
 # that will be run as a single job.
 with open(DNA_PATH, 'r') as dna_file:
-    pairs = {}
+    pairs: Dict[str, str] = {}
     for index, line in enumerate(dna_file):
         line = line.strip()
         if line.startswith('#') or len(line) == 0:
