@@ -13,10 +13,10 @@ Subpackages
 Submodules
 ----------
 
-bagel.app module
+bagel.api module
 ----------------
 
-.. automodule:: bagel.app
+.. automodule:: bagel.api
    :members:
    :undoc-members:
    :show-inheritance:
@@ -45,10 +45,10 @@ bagel.benchmark module
    :undoc-members:
    :show-inheritance:
 
-bagel.commands module
----------------------
+bagel.cli module
+----------------
 
-.. automodule:: bagel.commands
+.. automodule:: bagel.cli
    :members:
    :undoc-members:
    :show-inheritance:
@@ -57,6 +57,14 @@ bagel.download module
 ---------------------
 
 .. automodule:: bagel.download
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+bagel.exceptions module
+-----------------------
+
+.. automodule:: bagel.exceptions
    :members:
    :undoc-members:
    :show-inheritance:
