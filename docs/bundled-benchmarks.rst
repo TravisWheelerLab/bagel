@@ -29,8 +29,8 @@ These are implemented as commands within the benchmark container.  That is,
 there are executable programs called ``post_process`` and ``collect_results`` on
 the user's ``PATH`` within the container.
 
-.. include:: ../metadata/benchmarks/60pid.json
-   :code: json
+.. literalinclude:: ../metadata/benchmarks/60pid.json
+   :language: json
 
 ``post_process``
     This command accepts as input a chunk of output from the tool under
@@ -41,4 +41,3 @@ the user's ``PATH`` within the container.
     This process accepts the (potentially numerous) outputs from the
     ``post_process`` command and uses them to produce a report for the user,
     which is stored in a file called ``report.tar.gz``.
-

@@ -24,5 +24,5 @@ container) and a useful report is produced.
 .. image:: _static/overview-diagram.png
    :alt: BAGEL workflow overview
 
-See :ref:`tool <tools>` and :ref:`benchmark <benchmarks>` for information on
+See :ref:`tools` and :ref:`benchmarks` for information on
 benchmarking a specific tool or creating a new benchmark or benchmark family.

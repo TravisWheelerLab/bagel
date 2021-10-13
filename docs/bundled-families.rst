@@ -17,8 +17,8 @@ The Transmark family is the initial family implemented in BAGEL. Its API is
 described here. Note that a benchmark needn't come from the Transmark tool to be
 considered part of the Transmark family, it just needs to share the same API.
 
-.. include:: ../metadata/families/transmark.json
-   :code: json
+.. literalinclude:: ../metadata/families/transmark.json
+   :language: json
 
 Input and output formats are described below.
 
