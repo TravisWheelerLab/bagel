@@ -25,20 +25,20 @@ benchmark family (see above).
 
 An example is shown below, and each field is explained afterward.
 
-.. include:: ../metadata/benchmarks/60pid.json
-   :code: json
+.. literalinclude:: ../metadata/benchmarks/60pid.json
+   :language: json
 
-**family**
-    The benchmark family that the benchmark complies with, see above for more
-    information on benchmark families.
-**family_version**
-    The version of the family implemented by this benchmark.
 **name**
     The name of this particular benchmark. This should be descriptive and
     emphasize what makes this particular benchmark unique within its family.
 **version**
     The benchmark version is used when reporting results so that it is possible
     to determine whether two sets of results are comparable.
+**family**
+    The benchmark family that the benchmark complies with, see above for more
+    information on benchmark families.
+**family_version**
+    The version of the family implemented by this benchmark.
 **image**
     A reference to the Docker image that implements the benchmark family API
     and provides any stages declared for this particular benchmark. By default,
@@ -53,7 +53,11 @@ An example is shown below, and each field is explained afterward.
     process the results into a useful report. These can be arbitrary, but they
     must be declared in the benchmark metadata. Each stage must be implemented
     as an executable command on the user's ``PATH`` within the benchmark
-    container.
+    container. See `stages`_ for more information.
+
+.. NOTE::
+   The files passed to the first stage of a benchmark container will be in the
+   format documented by the benchmark family for the ``tool_result``.
 
 Docker Image
 ------------

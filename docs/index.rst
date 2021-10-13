@@ -48,6 +48,7 @@ Contents
    bundled-benchmarks
    tools
    bundled-tools
+   stages
 
 
 API Documentation
