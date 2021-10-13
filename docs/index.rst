@@ -3,6 +3,10 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: _static/bagel-logo.png
+   :height: 36pt
+   :align: left
+
 BAGEL Documentation
 ===================
 
@@ -12,8 +16,12 @@ BAGEL Documentation
    :maxdepth: 2
    :caption: Contents:
 
-   terminology
    overview
+   terminology
+   benchmarks
+   tools
+   bundled-benchmarks
+   bundled-families
    modules
 
 
@@ -41,8 +49,8 @@ existing documentation isn't sufficient for your needs, file a `GitHub issue
 
 
 
-Indices and tables
-==================
+Index and Search
+----------------
 
 * :ref:`genindex`
 * :ref:`modindex`

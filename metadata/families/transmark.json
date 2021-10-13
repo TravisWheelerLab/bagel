@@ -1,0 +1,12 @@
+{
+    "name": "transmark",
+    "version": "1.0.0",
+    "benchmark_data": [
+        "queries_dna",
+        "queries_protein",
+        "targets"
+    ],
+    "tool_results": [
+        "matches"
+    ]
+}

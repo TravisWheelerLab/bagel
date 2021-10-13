@@ -16,6 +16,12 @@ documentation. They are defined here for convenience.
 **Benchmark Tester**
     An individual or group who create the tool container that allows a
     particular tool to run against one or more benchmarks.
+**Stage**
+    A step within the computation required to run a tool (tool container) or
+    process the results of a tool (benchmark container). Tools and benchmarks
+    may declare arbitrary stages, and each stage can optionally "fan out" to run
+    many pieces in parallel, so long as each stage is capable of accepting as
+    input the output of the previous stage.
 **Tool (Search Tool)**
     A computer program used for sequence search. The purpose of BAGEL is to help
     assess the performance of different tools.
