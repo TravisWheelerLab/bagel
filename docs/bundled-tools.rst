@@ -8,4 +8,7 @@ Mock Search
 -----------
 
 This is a fake search tool implemented for testing purposes. It can be used to
-verify new benchmarks in the `Transmark <bundled-transmark>` family.
+verify new benchmarks in the :ref:`bundled-transmark` family.
+
+.. literalinclude:: ../tools/mock-search/metadata.json
+   :language: json

@@ -52,7 +52,7 @@ An example metadata file might look like this:
     filenames that will be produced by the tool's last stage.
 
 **stages**
-    Computational stages that are required to run the tool. See :ref:`Stages`
+    Computational stages that are required to run the tool. See :ref:`stages`
     for details. The last stage listed here must produce the results described
     above.
 
