@@ -21,7 +21,7 @@ class CLIError(Exception):
     cleanly, with an error message presented to the user.
     """
 
-    pass
+    ...
 
 
 class UnsupportedEnvironment(Exception):
@@ -30,4 +30,4 @@ class UnsupportedEnvironment(Exception):
     from an implementation of ``Backend``.
     """
 
-    pass
+    ...

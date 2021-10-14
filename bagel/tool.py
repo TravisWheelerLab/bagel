@@ -1,7 +1,11 @@
-from typing import IO, Dict, Iterable, List, NamedTuple, TextIO, Union
+from typing import IO, Dict, Iterable, List, NamedTuple, Union
 
 
 class Tool(NamedTuple):
+    """
+    A representation of a search tool metadata document.
+    """
+
     name: str
     version: str
     benchmarks: Iterable[str]

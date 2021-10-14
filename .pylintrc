@@ -1,0 +1,12 @@
+[MESSAGES CONTROL]
+
+disable=missing-module-docstring,
+        import-outside-toplevel,
+        too-many-branches,
+        too-many-locals,
+        too-few-public-methods,
+        line-too-long,
+        fixme,
+        no-else-break,
+        logging-fstring-interpolation,
+        too-many-statements,
