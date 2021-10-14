@@ -22,17 +22,8 @@ keys described below.
 
 An example metadata file might look like this:
 
-.. code-block:: json
-
-   {
-       "name": "mock-search",
-       "version": "1.0.0",
-       "benchmarks": ["transmark"],
-       "image": "traviswheelerlab/bagel-mock-search:1.0.0",
-       "results": {
-       "matches": "matches.tsv"
-       }
-   }
+.. literalinclude:: ../tools/mock-search/metadata.json
+   :language: json
 
 **name**
     The name of the tool in question. This needn't have any relation to the name
@@ -48,12 +39,22 @@ An example metadata file might look like this:
     For example, ``["transmark"]``.
 
 .. NOTE::
-   We need to incorporate the benchmark family version into the tool metadata.
+   We will eventually incorporate the benchmark family version into the tool
+   metadata.
 
 **image**
     A string containing the full path to the Docker image associated with the
     tool (described above), hosted on a public container registry such as
     `Docker Hub <https://dockerhub.com>`_ (which will be assumed by default).
+
+**results**
+    A mapping of result names, as defined by the families the tool supports, to
+    filenames that will be produced by the tool's last stage.
+
+**stages**
+    Computational stages that are required to run the tool. See :ref:`Stages`
+    for details. The last stage listed here must produce the results described
+    above.
 
 Docker Image
 ------------

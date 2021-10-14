@@ -2,5 +2,18 @@
     "name": "mock-search",
     "version": "1.0.0",
     "benchmarks": ["transmark"],
-    "image": "traviswheelerlab/bagel-mock-search:1.0.0"
+    "image": "traviswheelerlab/bagel-mock-search:1.0.0",
+    "results": {
+        "matches": "matches.tsv"
+    },
+    "stages": [
+        {
+            "name": "prepare_data",
+            "parallel": false
+        },
+        {
+            "name": "run_tool",
+            "parallel": true
+        }
+    ]
 }

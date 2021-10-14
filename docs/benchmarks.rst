@@ -31,23 +31,29 @@ An example is shown below, and each field is explained afterward.
 **name**
     The name of this particular benchmark. This should be descriptive and
     emphasize what makes this particular benchmark unique within its family.
+
 **version**
     The benchmark version is used when reporting results so that it is possible
     to determine whether two sets of results are comparable.
+
 **family**
     The benchmark family that the benchmark complies with, see above for more
     information on benchmark families.
+
 **family_version**
     The version of the family implemented by this benchmark.
+
 **image**
     A reference to the Docker image that implements the benchmark family API
     and provides any stages declared for this particular benchmark. By default,
     the image is assumed to exist in `Docker Hub <https://dockerhub.com>`_, but
     if a full path is provided, any public container registry is fine.
+
 **data**
     Where to find the data associated with the benchmark. This object must
     implement the API described by the benchmark family. The URLs provided here
     must be publicly accessible.
+
 **stages**
     Post-processing stages that will run after the tool has finished in order to
     process the results into a useful report. These can be arbitrary, but they

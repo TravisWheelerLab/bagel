@@ -22,15 +22,18 @@ example values for the `Transmark <bundled-transmark>` benchmark family.
 **name**
     The name of the family. This should be suggestive of its API, if possible,
     but it is ultimately arbitrary.
+
 **version**
     The API version. This allows the API to evolve over time. Benchmarks and
     tools pin themselves to a particular API version. The version should not
     change often.
+
 **benchmark_data**
     A benchmark that implements this family must provide a piece of data that
     corresponds to each item in this list. Note that the metadata doesn't place
     any direct restrictions on the shape or kind of the data (such as the file
     format), so these must be documented.
+
 **tool_results**
     The results expected from a tool that is compatible with this family. Each
     tool must produce a result for each element in the list. Again, this doesn't
