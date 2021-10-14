@@ -3,10 +3,6 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-.. image:: _static/bagel-logo.png
-   :height: 72pt
-   :align: left
-
 BAGEL Documentation
 ===================
 
