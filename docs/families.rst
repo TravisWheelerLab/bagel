@@ -16,8 +16,8 @@ validate this automatically).
 The metadata schema for a benchmark family is described below, along with
 example values for the `Transmark <bundled-transmark>` benchmark family.
 
-.. include:: ../metadata/families/transmark.json
-   :code: json
+.. literalinclude:: ../metadata/families/transmark.json
+   :language: json
 
 **name**
     The name of the family. This should be suggestive of its API, if possible,

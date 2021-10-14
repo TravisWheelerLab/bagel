@@ -7,16 +7,13 @@ BAGEL is useful to anyone who would like to evaluate the performance of a
 particular search tools, or compare a collection of search tools against one
 another.
 
-Tool Architecture
------------------
-
 A tool requires two pieces that should be relatively straightforward to create.
 These are described below. The only thing required to run a tool against a
 benchmark is the metadata, since the Docker image will be fetched from its
 registry.
 
-Metadata File
-+++++++++++++
+Metadata
+--------
 
 A metadata document must be provided to give the runner some information about
 the tool, such as which benchmarks it is intended to work with. The metadata
@@ -59,7 +56,7 @@ An example metadata file might look like this:
     `Docker Hub <https://dockerhub.com>`_ (which will be assumed by default).
 
 Docker Image
-++++++++++++
+------------
 
 A `Docker <https://docker.com>`_ image that is compatible with the container API
 for the benchmark family the tool is intended to run against.

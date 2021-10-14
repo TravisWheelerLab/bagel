@@ -53,7 +53,7 @@ An example is shown below, and each field is explained afterward.
     process the results into a useful report. These can be arbitrary, but they
     must be declared in the benchmark metadata. Each stage must be implemented
     as an executable command on the user's ``PATH`` within the benchmark
-    container. See `stages`_ for more information.
+    container. See :ref:`stages` for more information.
 
 .. NOTE::
    The files passed to the first stage of a benchmark container will be in the
