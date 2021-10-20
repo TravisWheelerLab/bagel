@@ -58,8 +58,6 @@ class NextflowBackend(Backend):
         benchmark: Benchmark,
         tools: Iterable[Tool],
     ) -> None:
-        from subprocess import run
-
         # TODO: Fan out all tools
         # Probably end up doing this by spawning multiple subprocesses
         # asynchronously and waiting for them all to finish.
@@ -109,8 +107,6 @@ class NextflowBackend(Backend):
         benchmark: Benchmark,
         tools: Iterable[Tool],
     ) -> None:
-        from subprocess import run
-
         # TODO: Fan out all tools
         # Probably end up doing this by spawning multiple subprocesses
         # asynchronously and waiting for them all to finish.

@@ -18,32 +18,39 @@ from .tool import load_tool
 FAIL_CODE = 100
 
 
-def run_cli(ns: Namespace) -> int:
-    configure_logger(ns.quiet, ns.debug, ns.verbose)
+def run_cli(args: Namespace) -> int:
+    """
+    Run the command line application given a namespace of arguments.
 
-    if ns.command == "run":
-        with open(ns.benchmark, "r") as bmark_file:
+    The return value is set as the exit code.
+    """
+    configure_logger(args.quiet, args.debug, args.verbose)
+
+    if args.command == "run":
+        with open(args.benchmark, "r") as bmark_file:
             try:
                 benchmark = load_benchmark(bmark_file)
-            except ValueError:
-                raise CLIError(f"Failed to load benchmark from {ns.benchmark}")
+            except ValueError as err:
+                raise CLIError(
+                    f"Failed to load benchmark from {args.benchmark}"
+                ) from err
 
         tools = []
-        for tool_path in ns.tools:
+        for tool_path in args.tools:
             with open(tool_path, "r") as tool_file:
                 try:
                     tool = load_tool(tool_file)
-                except ValueError:
-                    raise CLIError(f"Failed to load tool from {tool_path}")
+                except ValueError as err:
+                    raise CLIError(f"Failed to load tool from {tool_path}") from err
             tools.append(tool)
 
         try:
-            if ns.environment == "aws_batch":
+            if args.environment == "aws_batch":
                 config = AWSBatchConfig(
-                    ns.bucket,
-                    ns.cli_path,
-                    ns.queue,
-                    ns.region,
+                    args.bucket,
+                    args.cli_path,
+                    args.queue,
+                    args.region,
                 )
 
                 run_aws_batch(
@@ -51,47 +58,51 @@ def run_cli(ns: Namespace) -> int:
                     benchmark=benchmark,
                     tools=tools,
                 )
-            if ns.environment == "docker":
+            if args.environment == "docker":
                 run_docker(
                     benchmark=benchmark,
                     tools=tools,
                 )
-        except UnsupportedEnvironment:
-            raise CLIError(f"Backend does not support {ns.environment} environment")
+        except UnsupportedEnvironment as err:
+            raise CLIError(
+                f"Backend does not support {args.environment} environment"
+            ) from err
         except BackendError as err:
-            raise CLIError(f"Backend {err.name} failed with message:\n{err.message}")
+            raise CLIError(
+                f"Backend {err.name} failed with message:\n{err.message}"
+            ) from err
 
-    if ns.command == "benchmarks":
-        if ns.list:
+    if args.command == "benchmarks":
+        if args.list:
             available_bmarks = benchmarks_list()
             if available_bmarks:
                 print("NAME\tFAMILY\tVERSION")
             for bmark in available_bmarks:
                 print(bmark)
 
-        if ns.validate:
-            if ns.list:
-                get_logger().warn("Ignoring --validate because --list was passed")
+        if args.validate:
+            if args.list:
+                get_logger().warning("Ignoring --validate because --list was passed")
             else:
-                errors = benchmarks_validate(ns.validate)
+                errors = benchmarks_validate(args.validate)
                 for error in errors:
                     print(error)
                 if errors:
                     return FAIL_CODE
 
-    if ns.command == "tools":
-        if ns.list:
+    if args.command == "tools":
+        if args.list:
             available_tools = tools_list()
             if available_tools:
                 print("NAME\tVERSION\tBENCHMARKS")
             for tool in available_tools:
                 print(tool)
 
-        if ns.validate:
-            if ns.list:
-                get_logger().warn("Ignoring --validate because --list was passed")
+        if args.validate:
+            if args.list:
+                get_logger().warning("Ignoring --validate because --list was passed")
             else:
-                errors = tools_validate(ns.validate)
+                errors = tools_validate(args.validate)
                 for error in errors:
                     print(error)
                 if errors:

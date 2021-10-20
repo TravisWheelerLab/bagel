@@ -22,7 +22,8 @@ copyright = '2021, BAGEL Authors'
 author = 'AUTHORS'
 
 # The full version, including alpha/beta/rc tags
-release = '0.0.1'
+from bagel.version import VERSION
+release = VERSION
 
 
 # -- General configuration ---------------------------------------------------
@@ -53,6 +54,17 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', '.gitignore']
 # a list of builtin themes.
 #
 html_theme = 'alabaster'
+
+html_theme_options = {
+    'logo': 'bagel-logo.png',
+    'logo_name': True,
+    'description': 'A benchmark runner for DNA and protein search tools',
+    'touch_icon': 'bagel-logo.png',
+    'extra_nav_links': {
+        'Wheeler Lab': 'https://wheelerlab.org',
+        'BAGEL on GitHub': 'https://github.com/TravisWheelerLab/bagel',
+    }
+}
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

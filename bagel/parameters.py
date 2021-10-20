@@ -11,6 +11,10 @@ def _comma_tuple(arg: str) -> Tuple[str, ...]:
 
 
 def parse_args(args: List[str]) -> Namespace:
+    """
+    Register and parse arguments in one meta step.
+    """
+
     parser = ArgumentParser("benchmarks.py")
 
     parser.add_argument(

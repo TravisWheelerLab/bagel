@@ -1,4 +1,4 @@
-from typing import IO, Dict, List, NamedTuple, TextIO, Union
+from typing import IO, Dict, List, NamedTuple, Union
 
 
 class Benchmark(NamedTuple):
@@ -29,8 +29,8 @@ def load_benchmark(file: IO) -> Benchmark:
     try:
         bmark = json.load(file)
         return Benchmark(**bmark)
-    except:
-        raise ValueError()
+    except Exception as err:
+        raise ValueError() from err
 
 
 def validate_benchmark(data: Union[IO, Dict]) -> List[str]:

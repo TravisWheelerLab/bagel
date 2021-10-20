@@ -1,0 +1,26 @@
+{
+    "name": "60% ID",
+    "version": "1.0.0",
+    "family": "transmark",
+    "family_version": "1.0.0",
+    "image": "traviswheelerlab/bagel-60pid:1.0.0",
+    "data": {
+        "queries_dna": "https://osf.io/...",
+        "queries_protein": "https://osf.io/...",
+        "targets": "https://osf.io/..."
+    },
+    "stages": [
+        {
+            "name": "post_process",
+            "outputs": [
+                "processed_matches.tsv"
+            ]
+        },
+        {
+            "name": "collect_results",
+            "outputs": [
+                "report.tar.gz"
+            ]
+        }
+    ]
+}

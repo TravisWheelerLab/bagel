@@ -3,4 +3,4 @@
 set -e
 
 sphinx-apidoc -f -o docs/ .
-cd docs && make html
+cd docs && make clean && make html
