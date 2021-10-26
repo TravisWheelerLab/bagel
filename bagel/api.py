@@ -2,9 +2,9 @@ from typing import Iterable
 
 from .aws import AWSBatchConfig
 from .backend import NextflowBackend
-from .benchmark import Benchmark, validate_benchmark
 from .benchmarks import BENCHMARKS
-from .tool import Tool, validate_tool
+from .metadata.benchmark import Benchmark
+from .metadata.tool import Tool, validate_tool
 from .tools import TOOLS
 
 
@@ -20,7 +20,7 @@ def benchmarks_validate(bmark_path: str) -> Iterable[str]:
     Validate the benchmark metadata document pointed to by the given path.
     """
     with open(bmark_path, "r") as bmark_file:
-        errors = validate_benchmark(bmark_file)
+        errors = Benchmark.validate(bmark_file)
 
     return errors
 

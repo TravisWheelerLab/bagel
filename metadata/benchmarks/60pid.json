@@ -12,15 +12,11 @@
     "stages": [
         {
             "name": "post_process",
-            "outputs": [
-                "processed_matches.tsv"
-            ]
+            "parallel": true
         },
         {
             "name": "collect_results",
-            "outputs": [
-                "report.tar.gz"
-            ]
+            "parallel": false
         }
     ]
 }

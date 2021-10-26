@@ -9,11 +9,12 @@ from .api import (
     tools_validate,
 )
 from .aws import AWSBatchConfig
-from .benchmark import load_benchmark
+from .benchmarks import get_benchmark
 from .exceptions import BackendError, CLIError, UnsupportedEnvironment
 from .logger import configure_logger, get_logger
-from .tool import load_tool
-
+from .metadata.benchmark import Benchmark
+from .metadata.tool import load_tool
+from .tools import get_tool
 
 FAIL_CODE = 100
 
@@ -27,21 +28,28 @@ def run_cli(args: Namespace) -> int:
     configure_logger(args.quiet, args.debug, args.verbose)
 
     if args.command == "run":
-        with open(args.benchmark, "r") as bmark_file:
-            try:
-                benchmark = load_benchmark(bmark_file)
-            except ValueError as err:
-                raise CLIError(
-                    f"Failed to load benchmark from {args.benchmark}"
-                ) from err
+        benchmark = get_benchmark(args.benchmark)
+
+        if benchmark is None:
+            with open(args.benchmark, "r") as bmark_file:
+                try:
+                    benchmark = Benchmark.load(bmark_file)
+                except ValueError as err:
+                    raise CLIError(
+                        f"Failed to load benchmark from {args.benchmark}"
+                    ) from err
 
         tools = []
         for tool_path in args.tools:
-            with open(tool_path, "r") as tool_file:
-                try:
-                    tool = load_tool(tool_file)
-                except ValueError as err:
-                    raise CLIError(f"Failed to load tool from {tool_path}") from err
+            tool = get_tool(tool_path)
+
+            if tool is None:
+                with open(tool_path, "r") as tool_file:
+                    try:
+                        tool = load_tool(tool_file)
+                    except ValueError as err:
+                        raise CLIError(f"Failed to load tool from {tool_path}") from err
+
             tools.append(tool)
 
         try:

@@ -1,0 +1,97 @@
+{% for name, path in benchmark.data.items() %}
+{{ name }} = Channel.value( '{{ path }}' )
+{% endfor %}
+
+{# Tool stages #}
+{% for prev_stage, curr_stage, next_stage in tool.stages|windowed %}
+process {{ curr_stage.name }} {
+  container '{{ tool.image }}'
+  input:
+    {% if prev_stage == None %}
+    {# First stage #}
+    {% for name, path in benchmark.data.items() %}
+    path {{ name }} from {{ path }}
+    {% endfor %}
+    {% else %}
+    {# Subsequent stages #}
+    {% if prev_stage.parallel %}
+    path chunk from chunk.flatMap()
+    path context from context
+    {% else %}
+    path chunk from chunk
+    {% endif %}
+    {% endif %}
+  output:
+    {% if next_stage == None %}
+    {# Last stage #}
+    {% for name, path in tool.results.items() %}
+    path '{{ path }}' into {{ name }}
+    {% endfor %}
+    {% else %}
+    {# Previous stages #}
+    {% if next_stage.parallel %}
+    path 'output/*.tar.gz' into chunk
+    path 'output.tar.gz' into context
+    {% else %}
+    path 'output.tar.gz' into chunk
+    {% endif %}
+    {% endif %}
+  script:
+    """
+    mkdir output/
+    touch output.tar.gz
+    {% if curr_stage.parallel %}
+    {{ curr_stage.name }} ${chunk} ${context}
+    {% else %}
+    {{ curr_stage.name }} ${chunk}
+    {% endif %}
+    """
+}
+{% endfor %}
+
+{# Benchmark stages #}
+{% for prev_stage, curr_stage, next_stage in benchmark.stages|windowed %}
+process {{ curr_stage.name }} {
+  container '{{ tool.image }}'
+  input:
+    {% if prev_stage == None %}
+    {# First stage #}
+    {% for name in tool.results %}
+    path {{ name }} from {{ name }}
+    {% endfor %}
+    {% else %}
+    {# Subsequent stages #}
+    {% if prev_stage.parallel %}
+    path chunk from chunk.flatMap()
+    path context from context
+    {% else %}
+    path chunk from chunk
+    {% endif %}
+    {% endif %}
+  output:
+    {% if next_stage == None %}
+    {# Last stage #}
+    path 'results.tar.gz' into results
+    {% else %}
+    {# Previous stages #}
+    {% if next_stage.parallel %}
+    path 'output/*.tar.gz' into chunk
+    path 'output.tar.gz' into context
+    {% else %}
+    path 'output.tar.gz' into chunk
+    {% endif %}
+    {% endif %}
+  script:
+    """
+    mkdir output/
+    touch output.tar.gz
+    {% if curr_stage.parallel %}
+    {{ curr_stage.name }} ${chunk} ${context}
+    {% else %}
+    {{ curr_stage.name }} ${chunk}
+    {% endif %}
+    """
+}
+{% endfor %}
+
+results.view { "$it" }

@@ -3,9 +3,10 @@ from subprocess import run, SubprocessError
 from typing import Iterable
 
 from .aws import AWSBatchConfig
-from .benchmark import Benchmark
+from .metadata.benchmark import Benchmark
+from .metadata.tool import Tool
 from .logger import get_logger
-from .tool import Tool
+from .template import windowed
 
 
 class Backend(ABC):
@@ -52,6 +53,22 @@ class NextflowBackend(Backend):
     A backend that uses the Nextflow workflow management system.
     """
 
+    @staticmethod
+    def _build_workflow(benchmark: Benchmark, tool: Tool) -> str:
+        """
+        Build the actual workflow content and return it as a string.
+        """
+        from jinja2 import Environment, PackageLoader
+
+        env = Environment(
+            loader=PackageLoader("bagel"),
+            trim_blocks=True,
+            lstrip_blocks=True,
+        )
+        env.filters["windowed"] = windowed
+        tmpl = env.get_template("nextflow.nf.jinja2")
+        return tmpl.render(benchmark=benchmark, tool=tool)
+
     def run_aws_batch(
         self,
         aws: AWSBatchConfig,
@@ -63,10 +80,13 @@ class NextflowBackend(Backend):
         # asynchronously and waiting for them all to finish.
 
         for tool in tools:
+            workflow = self._build_workflow(benchmark, tool)
+            print(workflow)
+            return
             args = [
                 "nextflow",
                 "run",
-                f"{benchmark.family}-workflow.nf",
+                f"{benchmark.family_name}-workflow.nf",
                 "-process.executor",
                 "awsbatch",
                 "-process.queue",
@@ -115,7 +135,7 @@ class NextflowBackend(Backend):
             args = [
                 "nextflow",
                 "run",
-                f"{benchmark.family}-workflow.nf",
+                f"{benchmark.family_name}-workflow.nf",
                 "-process.executor",
                 "local",
                 "-process.container",

@@ -8,6 +8,7 @@ Subpackages
    :maxdepth: 4
 
    bagel.benchmarks
+   bagel.metadata
    bagel.tools
 
 Submodules
@@ -33,14 +34,6 @@ bagel.backend module
 --------------------
 
 .. automodule:: bagel.backend
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-bagel.benchmark module
-----------------------
-
-.. automodule:: bagel.benchmark
    :members:
    :undoc-members:
    :show-inheritance:
@@ -85,10 +78,10 @@ bagel.parameters module
    :undoc-members:
    :show-inheritance:
 
-bagel.tool module
------------------
+bagel.template module
+---------------------
 
-.. automodule:: bagel.tool
+.. automodule:: bagel.template
    :members:
    :undoc-members:
    :show-inheritance:
